@@ -1,9 +1,13 @@
-import { Container, Icon, ButtonInterface } from './styles';
+import { Container, Icon, Button } from './styles';
 
-function Button({ buttonColor, active }: ButtonInterface) {
+interface ButtonDashboard extends Button {
+  icon: string;
+}
+
+function Button({ buttonColor, active, icon }: ButtonDashboard) {
   return (
     <Container buttonColor={buttonColor}>
-      <Icon />
+      <Icon icon={icon} />
     </Container>
   );
 }

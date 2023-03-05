@@ -1,11 +1,15 @@
 import styled from 'styled-components/native';
 
-export interface ButtonInterface {
+export interface Button {
   buttonColor: string;
   active?: boolean;
 }
 
-export const Container = styled.TouchableOpacity<ButtonInterface>`
+interface Svg {
+  icon: string;
+}
+
+export const Container = styled.TouchableOpacity<Button>`
   display: flex;
 
   justify-content: center;
@@ -19,7 +23,9 @@ export const Container = styled.TouchableOpacity<ButtonInterface>`
   background-color: ${({ buttonColor }) => buttonColor};
 `;
 
-export const Icon = styled.Image`
+export const Icon = styled.Image<Svg>`
   width: 100px;
   height: 100px;
+
+  src: ${({ icon }) => icon};
 `;
