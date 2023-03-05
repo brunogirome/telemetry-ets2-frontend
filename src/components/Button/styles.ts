@@ -20,7 +20,7 @@ export const Container = styled.TouchableOpacity<Button>`
 
   border-radius: 20px;
 
-  background-color: ${({ buttonColor }) => buttonColor};
+  background-color: ${props => props.theme.colors.test};
 `;
 
 export const Icon = styled.Image<Svg>`
