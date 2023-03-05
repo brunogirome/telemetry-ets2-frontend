@@ -1,4 +1,4 @@
-export const THEME = {
+const THEME = {
   COLORS: {
     background: '#E5E5E5',
     button_icon: '#FFF',
@@ -21,3 +21,5 @@ export const THEME = {
     numbers_600: 'Rubik_600SemiBold',
   },
 };
+
+export default THEME;
