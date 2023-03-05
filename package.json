@@ -1,18 +1,32 @@
 {
   "dependencies": {
-    "axios": "^1.3.4",
+    "@expo-google-fonts/inter": "^0.2.3",
+    "@expo-google-fonts/rubik": "^0.2.3",
     "expo": "^47.0.0",
+    "expo-app-loading": "^2.1.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
     "react-native-web": "~0.18.7",
-    "socket.io-client": "^4.6.1"
+    "socket.io-client": "^4.6.1",
+    "styled-components": "^5.3.8"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
     "@types/react": "~18.0.24",
     "@types/react-native": "~0.70.6",
-    "typescript": "^4.6.3"
+    "@types/styled-components": "^5.1.26",
+    "@types/styled-components-react-native": "^5.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "babel-plugin-styled-components": "^2.0.7",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.32.2",
+    "prettier": "2.7.1",
+    "typescript": "*"
   },
   "scripts": {
     "start": "expo start",
@@ -22,5 +36,9 @@
   },
   "version": "1.0.0",
   "private": true,
-  "name": "app-telemetry-ets"
+  "name": "app-telemetry-ets",
+  "resolutions": {
+    "styled-components": "^5"
+  },
+  "license": "MIT"
 }
