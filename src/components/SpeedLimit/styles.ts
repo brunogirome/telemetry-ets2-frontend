@@ -7,7 +7,7 @@ export const Container = styled.View`
   border-radius: 72.5px;
 
   box-sizing: border-box;
-  border: 13px solid ${({ theme }) => theme.COLORS.speed_limit_border};
+  border: 14px solid ${({ theme }) => theme.COLORS.speed_limit_border};
 
   background-color: ${({ theme }) => theme.COLORS.speed_limit_background};
 

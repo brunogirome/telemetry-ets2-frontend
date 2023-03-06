@@ -1,7 +1,8 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+
 import { SvgProps } from 'react-native-svg';
 
-// import { io } from 'socket.io-client';
+import io from 'socket.io-client';
 
 import theme from '../../theme';
 
@@ -21,6 +22,10 @@ import CurrentSpeed from '../../components/CurrentSpeed';
 
 import { Container, ButtonRow, ButtonRowContainer } from './styles';
 
+const socket = io('http://192.168.0.118:3001');
+
+socket.connect();
+
 interface TruckButton {
   key: number;
   color: string;
@@ -29,16 +34,33 @@ interface TruckButton {
   Icon: React.FC<SvgProps>;
 }
 
-export default function Dashboard() {
-  // const socket = io('http://192.168.0.118:3001');
+interface TelemetryInfo {
+  truckSpeed: number;
+  currentFuel: number;
+  totalFuel: number;
 
-  const [hazzard, setHazard] = useState<TruckButton>({
+  hazardLight: boolean;
+  cruizeControl: boolean;
+  highLight: boolean;
+  engineBreak: boolean;
+
+  differential: boolean;
+  light: boolean;
+  retarderStatus: number;
+
+  currentMaxSpeed: number;
+}
+
+export default function Dashboard() {
+  const [hazard, setHazard] = useState<TruckButton>({
     key: 1,
     color: theme.COLORS.hazard,
     input_key: 'F',
     isActive: false,
     Icon: HazardIcon,
   });
+
+  const [hazardLight, setHazardLight] = useState(false);
 
   const [cruizeControl, setCruizeControl] = useState<TruckButton>({
     key: 2,
@@ -88,15 +110,39 @@ export default function Dashboard() {
     Icon: RetarderIcon,
   });
 
+  const [speed, setSpeed] = useState(0);
+
+  const [speedLimit, setLimitSpeed] = useState(0);
+
+  useEffect(() => {
+    socket.on('speed', (truckSpeed: number) => setSpeed(truckSpeed));
+
+    socket.on('speed_limit', (roadLimitSpeed: number) =>
+      setLimitSpeed(roadLimitSpeed),
+    );
+
+    socket.on('hazard_light', (hazardLightStatus: boolean) =>
+      setHazardLight(hazardLightStatus),
+    );
+  }, [socket]);
+
+  const pressButton = useCallback(
+    (key: string) => {
+      socket.emit('ingame_command', key);
+    },
+    [socket],
+  );
+
   return (
     <Container>
       <ButtonRowContainer>
         <ButtonRow>
           <Button
-            key={hazzard.key}
-            buttonColor={hazzard.color}
-            Icon={hazzard.Icon}
-            active={hazzard.isActive}
+            key={hazard.key}
+            buttonColor={hazard.color}
+            Icon={hazard.Icon}
+            active={hazardLight}
+            onPress={() => pressButton('F')}
           />
           <Button
             key={cruizeControl.key}
@@ -109,6 +155,7 @@ export default function Dashboard() {
             buttonColor={highLight.color}
             Icon={highLight.Icon}
             active={highLight.isActive}
+            onPress={() => pressButton('K')}
           />
           <Button
             key={engineBreak.key}
@@ -123,12 +170,14 @@ export default function Dashboard() {
             buttonColor={differential.color}
             Icon={differential.Icon}
             active={differential.isActive}
+            onPress={() => pressButton('V')}
           />
           <Button
             key={light.key}
             buttonColor={light.color}
             Icon={light.Icon}
             active={light.isActive}
+            onPress={() => pressButton('L')}
           />
           <Button
             key={retarder.key}
@@ -136,11 +185,11 @@ export default function Dashboard() {
             Icon={retarder.Icon}
             active={retarder.isActive}
           />
-          <SpeedLimit speedLimit={90} />
+          <SpeedLimit speedLimit={speedLimit} />
         </ButtonRow>
       </ButtonRowContainer>
       <CurrentSpeed
-        currentSpeed={54}
+        currentSpeed={speed}
         currentGasLiters={10}
         maxGasCapacity={100}
       />

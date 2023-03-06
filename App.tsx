@@ -1,4 +1,4 @@
-import Dashboard from './src/screens/Dashboard';
+import { useFonts } from '@expo-google-fonts/rubik/useFonts';
 
 import {
   Rubik_400Regular,
@@ -8,7 +8,7 @@ import {
 
 import { Inter_400Regular } from '@expo-google-fonts/inter';
 
-import { useFonts } from '@expo-google-fonts/rubik/useFonts';
+import Dashboard from './src/screens/Dashboard';
 
 import AppLoading from 'expo-app-loading';
 
