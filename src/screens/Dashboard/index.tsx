@@ -15,6 +15,8 @@ import RetarderIcon from '../../assets/retarder.svg';
 
 import Button from '../../components/Button';
 
+import SpeedLimit from '../../components/SpeedLimit';
+
 import { Container } from './styles';
 
 interface TruckButton {
@@ -92,6 +94,7 @@ export default function Dashboard() {
         Icon={hazzard.Icon}
         active={hazzard.isActive}
       />
+      <SpeedLimit speedLimit={90} />
     </Container>
   );
 }
