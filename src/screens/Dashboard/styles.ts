@@ -3,19 +3,31 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
   display: flex;
 
-  justify-content: center;
+  flex-direction: row;
 
-  align-items: center;
+  background-color: ${({ theme }) => theme.COLORS.background};
+`;
 
-  height: 50%;
+export const ButtonRowContainer = styled.View`
+  width: 80%;
 
-  width: 85%;
+  display: flex;
 
-  justify-content: space-between;
+  flex-direction: column;
+`;
+
+export const ButtonRow = styled.View`
+  padding: 20px;
+
+  display: flex;
 
   flex-direction: row;
 
-  padding: 20px;
+  align-items: center;
 
-  background-color: ${({ theme }) => theme.COLORS.background};
+  justify-content: space-around;
+
+  height: 50%;
+
+  width: 100%;
 `;

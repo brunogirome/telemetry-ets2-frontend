@@ -17,7 +17,9 @@ import Button from '../../components/Button';
 
 import SpeedLimit from '../../components/SpeedLimit';
 
-import { Container } from './styles';
+import CurrentSpeed from '../../components/CurrentSpeed';
+
+import { Container, ButtonRow, ButtonRowContainer } from './styles';
 
 interface TruckButton {
   key: number;
@@ -88,13 +90,42 @@ export default function Dashboard() {
 
   return (
     <Container>
-      <Button
-        key={hazzard.key}
-        buttonColor={hazzard.color}
-        Icon={hazzard.Icon}
-        active={hazzard.isActive}
+      <ButtonRowContainer>
+        <ButtonRow>
+          <Button
+            key={hazzard.key}
+            buttonColor={hazzard.color}
+            Icon={hazzard.Icon}
+            active={hazzard.isActive}
+          />
+          <Button
+            key={cruizeControl.key}
+            buttonColor={cruizeControl.color}
+            Icon={cruizeControl.Icon}
+            active={cruizeControl.isActive}
+          />
+          <Button
+            key={highLight.key}
+            buttonColor={highLight.color}
+            Icon={highLight.Icon}
+            active={highLight.isActive}
+          />
+          <Button
+            key={light.key}
+            buttonColor={light.color}
+            Icon={light.Icon}
+            active={light.isActive}
+          />
+        </ButtonRow>
+        <ButtonRow>
+          <SpeedLimit speedLimit={90} />
+        </ButtonRow>
+      </ButtonRowContainer>
+      <CurrentSpeed
+        currentSpeed={54}
+        currentGasLiters={10}
+        maxGasCapacity={100}
       />
-      <SpeedLimit speedLimit={90} />
     </Container>
   );
 }

@@ -10,9 +10,11 @@ const THEME = {
     high_light: '#4FA4E1',
     retarder: '#435E77',
     engine_break: '#D3D717',
+    text: '#232B2B',
     speed_limit_border: '#E33C46',
     speed_limit_text: '#454544',
     speed_limit_background: '#FEFCF8',
+    primary_button: '#2CC09D',
   },
   FONTS: {
     regular: 'Inter_400Regular',
