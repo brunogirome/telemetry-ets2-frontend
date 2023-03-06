@@ -5,10 +5,6 @@ export interface ButtonInterface {
   active: boolean;
 }
 
-interface SvgInterFace {
-  icon: string;
-}
-
 export const Container = styled.TouchableOpacity<ButtonInterface>`
   display: flex;
 
