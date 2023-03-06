@@ -14,7 +14,7 @@ import AppLoading from 'expo-app-loading';
 
 import { ThemeProvider } from 'styled-components';
 
-import { THEME } from './src/theme';
+import THEME from './src/theme';
 
 export default function App() {
   const [fontsLoaded] = useFonts({

@@ -1,13 +1,15 @@
-import { Container, Icon, Button } from './styles';
+import { SvgProps } from 'react-native-svg';
 
-interface ButtonDashboard extends Button {
-  icon: string;
+import { Container, ButtonInterface } from './styles';
+
+interface ButtonDashboard extends ButtonInterface {
+  Icon: React.FC<SvgProps>;
 }
 
-function Button({ buttonColor, active, icon }: ButtonDashboard) {
+function Button({ buttonColor, active, Icon }: ButtonDashboard) {
   return (
-    <Container buttonColor={buttonColor}>
-      <Icon icon={icon} />
+    <Container buttonColor={buttonColor} active={active}>
+      <Icon />
     </Container>
   );
 }

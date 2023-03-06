@@ -1,15 +1,15 @@
 import styled from 'styled-components/native';
 
-export interface Button {
+export interface ButtonInterface {
   buttonColor: string;
-  active?: boolean;
+  active: boolean;
 }
 
-interface Svg {
+interface SvgInterFace {
   icon: string;
 }
 
-export const Container = styled.TouchableOpacity<Button>`
+export const Container = styled.TouchableOpacity<ButtonInterface>`
   display: flex;
 
   justify-content: center;
@@ -20,12 +20,6 @@ export const Container = styled.TouchableOpacity<Button>`
 
   border-radius: 20px;
 
-  background-color: ${({ theme }) => theme.COLORS.button_icon};
-`;
-
-export const Icon = styled.Image<Svg>`
-  width: 100px;
-  height: 100px;
-
-  src: ${({ icon }) => icon};
+  background-color: ${({ theme, active, buttonColor }) =>
+    !active ? theme.COLORS.disabled_button : buttonColor};
 `;
