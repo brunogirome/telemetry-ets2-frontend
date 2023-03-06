@@ -111,13 +111,31 @@ export default function Dashboard() {
             active={highLight.isActive}
           />
           <Button
+            key={engineBreak.key}
+            buttonColor={engineBreak.color}
+            Icon={engineBreak.Icon}
+            active={engineBreak.isActive}
+          />
+        </ButtonRow>
+        <ButtonRow>
+          <Button
+            key={differential.key}
+            buttonColor={differential.color}
+            Icon={differential.Icon}
+            active={differential.isActive}
+          />
+          <Button
             key={light.key}
             buttonColor={light.color}
             Icon={light.Icon}
             active={light.isActive}
           />
-        </ButtonRow>
-        <ButtonRow>
+          <Button
+            key={retarder.key}
+            buttonColor={retarder.color}
+            Icon={retarder.Icon}
+            active={retarder.isActive}
+          />
           <SpeedLimit speedLimit={90} />
         </ButtonRow>
       </ButtonRowContainer>
