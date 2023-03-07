@@ -1,10 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 
-import { SvgProps } from 'react-native-svg';
-
 import io from 'socket.io-client';
-
-import theme from '../../theme';
 
 import HazardIcon from '../../assets/hazard.svg';
 import CruiseControlIcon from '../../assets/cruize_control.svg';
@@ -51,7 +47,31 @@ export default function Dashboard() {
 
   const [fuelCapacity, setFuelCapacity] = useState(0);
 
-  useEffect(() => {}, [socket]);
+  useEffect(() => {
+    socket.on('hazard', status => setHazardStatus(status));
+
+    socket.on('cruise-control', status => setCruiseControlStatus(status));
+
+    socket.on('high-beam', status => setHighLightStatus(status));
+
+    socket.on('engine-break', status => setEngineBreakStatus(status));
+
+    socket.on('differential', status => setDifferentialStatus(status));
+
+    socket.on('low-beam', status => setLightStatus(status));
+
+    socket.on('park', status => setParkingStatus(status));
+
+    socket.on('speed', speed => setSpeed(speed));
+
+    socket.on('speed-limit', speedLimitValue => setLimitSpeed(speedLimitValue));
+
+    socket.on('fuel-value', currentGasValue => setCurrentGas(currentGasValue));
+
+    socket.on('fuel-capacity', fuelCapacityValue =>
+      setFuelCapacity(fuelCapacityValue),
+    );
+  }, [socket]);
 
   const pressButton = useCallback(
     (key: string) => {
@@ -76,6 +96,7 @@ export default function Dashboard() {
             buttonColor={defaultSettings.cruiseControl.color}
             Icon={CruiseControlIcon}
             active={cruiseControlStatus}
+            onPress={() => pressButton(defaultSettings.cruiseControl.input_key)}
           />
           <Button
             key={defaultSettings.highLight.key}
@@ -89,6 +110,7 @@ export default function Dashboard() {
             buttonColor={defaultSettings.engineBreak.color}
             Icon={EngineBreakIcon}
             active={engineBreakStatus}
+            onPress={() => pressButton(defaultSettings.engineBreak.input_key)}
           />
         </ButtonRow>
         <ButtonRow>
@@ -111,14 +133,15 @@ export default function Dashboard() {
             buttonColor={defaultSettings.parking.color}
             Icon={ParkingIcon}
             active={parkingStatus}
+            onPress={() => pressButton(defaultSettings.parking.input_key)}
           />
           <SpeedLimit speedLimit={speedLimit} />
         </ButtonRow>
       </ButtonRowContainer>
       <CurrentSpeed
         currentSpeed={speed}
-        currentGasLiters={10}
-        maxGasCapacity={100}
+        currentGasLiters={currentGas}
+        maxGasCapacity={fuelCapacity}
       />
     </Container>
   );

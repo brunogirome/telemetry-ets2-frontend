@@ -19,12 +19,12 @@ const defaultButtonSettings = {
   engineBreak: {
     key: 4,
     color: THEME.COLORS.engine_break,
-    input_key: 'E',
+    input_key: 'B',
   },
   differential: {
     key: 5,
     color: THEME.COLORS.differential,
-    input_key: 'D',
+    input_key: 'V',
   },
   light: {
     key: 6,
