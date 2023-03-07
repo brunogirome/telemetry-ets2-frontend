@@ -7,12 +7,12 @@ import io from 'socket.io-client';
 import theme from '../../theme';
 
 import HazardIcon from '../../assets/hazard.svg';
-import CruizeControlIcon from '../../assets/cruize_control.svg';
+import CruiseControlIcon from '../../assets/cruize_control.svg';
 import HighLightIcon from '../../assets/high_light.svg';
 import EngineBreakIcon from '../../assets/engine_break.svg';
 import DifferentialIcon from '../../assets/differential.svg';
 import LightIcon from '../../assets/light.svg';
-import RetarderIcon from '../../assets/retarder.svg';
+import ParkingIcon from '../../assets/parking.svg';
 
 import Button from '../../components/Button';
 
@@ -22,109 +22,36 @@ import CurrentSpeed from '../../components/CurrentSpeed';
 
 import { Container, ButtonRow, ButtonRowContainer } from './styles';
 
+import defaultSettings from '../../utils/default_settings';
+
 const socket = io('http://192.168.0.118:3001');
 
 socket.connect();
 
-interface TruckButton {
-  key: number;
-  color: string;
-  input_key: string;
-  isActive: boolean;
-  Icon: React.FC<SvgProps>;
-}
-
-interface TelemetryInfo {
-  truckSpeed: number;
-  currentFuel: number;
-  totalFuel: number;
-
-  hazardLight: boolean;
-  cruizeControl: boolean;
-  highLight: boolean;
-  engineBreak: boolean;
-
-  differential: boolean;
-  light: boolean;
-  retarderStatus: number;
-
-  currentMaxSpeed: number;
-}
-
 export default function Dashboard() {
-  const [hazard, setHazard] = useState<TruckButton>({
-    key: 1,
-    color: theme.COLORS.hazard,
-    input_key: 'F',
-    isActive: false,
-    Icon: HazardIcon,
-  });
+  const [hazardStatus, setHazardStatus] = useState(false);
 
-  const [hazardLight, setHazardLight] = useState(false);
+  const [cruiseControlStatus, setCruiseControlStatus] = useState(false);
 
-  const [cruizeControl, setCruizeControl] = useState<TruckButton>({
-    key: 2,
-    color: theme.COLORS.cruize_control,
-    input_key: 'C',
-    isActive: false,
-    Icon: CruizeControlIcon,
-  });
+  const [highLightStatus, setHighLightStatus] = useState(false);
 
-  const [highLight, setHighlight] = useState<TruckButton>({
-    key: 3,
-    color: theme.COLORS.high_light,
-    input_key: 'H',
-    isActive: false,
-    Icon: HighLightIcon,
-  });
+  const [engineBreakStatus, setEngineBreakStatus] = useState(false);
 
-  const [engineBreak, setEngineBreak] = useState<TruckButton>({
-    key: 4,
-    color: theme.COLORS.engine_break,
-    input_key: 'E',
-    isActive: false,
-    Icon: EngineBreakIcon,
-  });
+  const [differentialStatus, setDifferentialStatus] = useState(false);
 
-  const [differential, setDifferential] = useState<TruckButton>({
-    key: 5,
-    color: theme.COLORS.differential,
-    input_key: 'D',
-    isActive: false,
-    Icon: DifferentialIcon,
-  });
+  const [lightStatus, setLightStatus] = useState(false);
 
-  const [light, setLight] = useState<TruckButton>({
-    key: 6,
-    color: theme.COLORS.light,
-    input_key: 'L',
-    isActive: false,
-    Icon: LightIcon,
-  });
-
-  const [retarder, setRetarder] = useState<TruckButton>({
-    key: 7,
-    color: theme.COLORS.retarder,
-    input_key: 'R',
-    isActive: false,
-    Icon: RetarderIcon,
-  });
+  const [parkingStatus, setParkingStatus] = useState(false);
 
   const [speed, setSpeed] = useState(0);
 
   const [speedLimit, setLimitSpeed] = useState(0);
 
-  useEffect(() => {
-    socket.on('speed', (truckSpeed: number) => setSpeed(truckSpeed));
+  const [currentGas, setCurrentGas] = useState(0);
 
-    socket.on('speed_limit', (roadLimitSpeed: number) =>
-      setLimitSpeed(roadLimitSpeed),
-    );
+  const [fuelCapacity, setFuelCapacity] = useState(0);
 
-    socket.on('hazard_light', (hazardLightStatus: boolean) =>
-      setHazardLight(hazardLightStatus),
-    );
-  }, [socket]);
+  useEffect(() => {}, [socket]);
 
   const pressButton = useCallback(
     (key: string) => {
@@ -138,52 +65,52 @@ export default function Dashboard() {
       <ButtonRowContainer>
         <ButtonRow>
           <Button
-            key={hazard.key}
-            buttonColor={hazard.color}
-            Icon={hazard.Icon}
-            active={hazardLight}
-            onPress={() => pressButton('F')}
+            key={defaultSettings.hazard.key}
+            buttonColor={defaultSettings.hazard.color}
+            Icon={HazardIcon}
+            active={hazardStatus}
+            onPress={() => pressButton(defaultSettings.hazard.input_key)}
           />
           <Button
-            key={cruizeControl.key}
-            buttonColor={cruizeControl.color}
-            Icon={cruizeControl.Icon}
-            active={cruizeControl.isActive}
+            key={defaultSettings.cruiseControl.key}
+            buttonColor={defaultSettings.cruiseControl.color}
+            Icon={CruiseControlIcon}
+            active={cruiseControlStatus}
           />
           <Button
-            key={highLight.key}
-            buttonColor={highLight.color}
-            Icon={highLight.Icon}
-            active={highLight.isActive}
-            onPress={() => pressButton('K')}
+            key={defaultSettings.highLight.key}
+            buttonColor={defaultSettings.highLight.color}
+            Icon={HighLightIcon}
+            active={highLightStatus}
+            onPress={() => pressButton(defaultSettings.highLight.input_key)}
           />
           <Button
-            key={engineBreak.key}
-            buttonColor={engineBreak.color}
-            Icon={engineBreak.Icon}
-            active={engineBreak.isActive}
+            key={defaultSettings.engineBreak.key}
+            buttonColor={defaultSettings.engineBreak.color}
+            Icon={EngineBreakIcon}
+            active={engineBreakStatus}
           />
         </ButtonRow>
         <ButtonRow>
           <Button
-            key={differential.key}
-            buttonColor={differential.color}
-            Icon={differential.Icon}
-            active={differential.isActive}
-            onPress={() => pressButton('V')}
+            key={defaultSettings.differential.key}
+            buttonColor={defaultSettings.differential.color}
+            Icon={DifferentialIcon}
+            active={differentialStatus}
+            onPress={() => pressButton(defaultSettings.differential.input_key)}
           />
           <Button
-            key={light.key}
-            buttonColor={light.color}
-            Icon={light.Icon}
-            active={light.isActive}
-            onPress={() => pressButton('L')}
+            key={defaultSettings.light.key}
+            buttonColor={defaultSettings.light.color}
+            Icon={LightIcon}
+            active={lightStatus}
+            onPress={() => pressButton(defaultSettings.light.input_key)}
           />
           <Button
-            key={retarder.key}
-            buttonColor={retarder.color}
-            Icon={retarder.Icon}
-            active={retarder.isActive}
+            key={defaultSettings.parking.key}
+            buttonColor={defaultSettings.parking.color}
+            Icon={ParkingIcon}
+            active={parkingStatus}
           />
           <SpeedLimit speedLimit={speedLimit} />
         </ButtonRow>
