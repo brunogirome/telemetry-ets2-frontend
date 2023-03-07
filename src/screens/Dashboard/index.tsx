@@ -24,6 +24,22 @@ const socket = io('http://192.168.0.118:3001');
 
 socket.connect();
 
+interface TelemetryInitialization {
+  hazard: boolean;
+  cruiseControl: boolean;
+  highlight: boolean;
+  engineBreak: boolean;
+  differential: boolean;
+  light: boolean;
+  parking: boolean;
+
+  maxSpeed: number;
+  currentSpeed: number;
+
+  currentFuel: number;
+  fuelCapacity: number;
+}
+
 export default function Dashboard() {
   const [hazardStatus, setHazardStatus] = useState(false);
 
@@ -70,6 +86,23 @@ export default function Dashboard() {
 
     socket.on('fuel-capacity', fuelCapacityValue =>
       setFuelCapacity(fuelCapacityValue),
+    );
+
+    socket.on(
+      'telemetry-initialization',
+      (telemetryInitialization: TelemetryInitialization) => {
+        setHazardStatus(telemetryInitialization.hazard);
+        setCruiseControlStatus(telemetryInitialization.cruiseControl);
+        setHighLightStatus(telemetryInitialization.highlight);
+        setEngineBreakStatus(telemetryInitialization.engineBreak);
+        setDifferentialStatus(telemetryInitialization.differential);
+        setLightStatus(telemetryInitialization.light);
+        setParkingStatus(telemetryInitialization.parking);
+        setSpeed(telemetryInitialization.currentSpeed);
+        setLimitSpeed(telemetryInitialization.maxSpeed);
+        setCurrentGas(telemetryInitialization.currentFuel);
+        setFuelCapacity(telemetryInitialization.fuelCapacity);
+      },
     );
   }, [socket]);
 
