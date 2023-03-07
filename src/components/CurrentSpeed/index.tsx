@@ -37,7 +37,7 @@ function CurrentSpeed({
         </GasTextContainer>
       </NumberInfoContainer>
       <HotKeyButton onPress={() => {}}>
-        <HotKeyButtonText>Atalhos</HotKeyButtonText>
+        <HotKeyButtonText>Configs.</HotKeyButtonText>
       </HotKeyButton>
     </Container>
   );
