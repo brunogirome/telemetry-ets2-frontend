@@ -13,17 +13,21 @@ interface CurrentSpeedInterface {
   currentSpeed: number;
   currentGasLiters: number;
   maxGasCapacity: number;
+  isCruiseControlActive: boolean;
 }
 
 function CurrentSpeed({
   currentGasLiters,
   maxGasCapacity,
   currentSpeed,
+  isCruiseControlActive,
 }: CurrentSpeedInterface) {
   return (
     <Container>
       <NumberInfoContainer>
-        <CurrentSpeedText>{currentSpeed}</CurrentSpeedText>
+        <CurrentSpeedText isCruiseControlActive={isCruiseControlActive}>
+          {currentSpeed}
+        </CurrentSpeedText>
         <KhhText>km/h</KhhText>
         <GasTextContainer>
           <GasText>Tanque:</GasText>

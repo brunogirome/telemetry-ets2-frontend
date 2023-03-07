@@ -142,6 +142,7 @@ export default function Dashboard() {
         currentSpeed={speed}
         currentGasLiters={currentGas}
         maxGasCapacity={fuelCapacity}
+        isCruiseControlActive={cruiseControlStatus}
       />
     </Container>
   );

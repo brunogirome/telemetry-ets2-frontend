@@ -1,5 +1,9 @@
 import styled from 'styled-components/native';
 
+interface CurrentSpeedInterface {
+  isCruiseControlActive: boolean;
+}
+
 export const Container = styled.View`
   width: 20%;
 
@@ -26,8 +30,9 @@ export const NumberInfoContainer = styled.View`
   align-items: center;
 `;
 
-export const CurrentSpeedText = styled.Text`
-  color: ${({ theme }) => theme.COLORS.text};
+export const CurrentSpeedText = styled.Text<CurrentSpeedInterface>`
+  color: ${({ theme, isCruiseControlActive }) =>
+    isCruiseControlActive ? theme.COLORS.cruise_control : theme.COLORS.text};
 
   font-family: ${({ theme }) => theme.FONTS.numbers_500};
 
