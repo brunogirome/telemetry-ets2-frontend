@@ -15,7 +15,7 @@ const THEME = {
     speed_limit_border: '#E33C46',
     speed_limit_text: '#454544',
     speed_limit_background: '#FEFCF8',
-    primary_button: '#2CC09D',
+    primary_button: '#FF7900',
   },
   FONTS: {
     regular: 'Inter_400Regular',

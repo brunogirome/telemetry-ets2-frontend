@@ -10,6 +10,8 @@ import { Inter_400Regular } from '@expo-google-fonts/inter';
 
 import Dashboard from './src/screens/Dashboard';
 
+import Settings from './src/screens/Settings';
+
 import AppLoading from 'expo-app-loading';
 
 import { ThemeProvider } from 'styled-components';
@@ -30,7 +32,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={THEME}>
-      <Dashboard />
+      <Settings />
     </ThemeProvider>
   );
 }

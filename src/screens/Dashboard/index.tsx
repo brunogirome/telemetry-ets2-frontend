@@ -20,7 +20,7 @@ import { Container, ButtonRow, ButtonRowContainer } from './styles';
 
 import defaultSettings from '../../utils/default_settings';
 
-const socket = io('http://192.168.0.118:3001');
+const socket = io('http://192.168.0.22:3001');
 
 socket.connect();
 
