@@ -1,6 +1,10 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+import { LinearGradient } from 'expo-linear-gradient';
+
+export const Container = styled(LinearGradient).attrs({
+  colors: ['#112351', '#1F2C4E'],
+})`
   display: flex;
   flex-direction: column;
 
@@ -44,29 +48,50 @@ export const CommandsList = styled.ScrollView`
   margin-bottom: 25px;
 `;
 
-export const CommandCard = styled.View`
-  margin-top: 15px;
-
-  border-radius: 5px;
-
+export const CommandContainer = styled.View`
   display: flex;
 
   flex-direction: row;
 
-  height: 70px;
   width: 100%;
+
+  justify-content: flex-end;
+
+  align-items: center;
+
+  margin-top: 15px;
+`;
+
+export const CommandLabel = styled.Text`
+  padding-right: 10px;
+
+  color: ${({ theme }) => theme.COLORS.speed_limit_background};
+
+  font-family: ${({ theme }) => theme.FONTS.numbers_500};
+
+  font-size: 20px;
+`;
+
+export const CommandCard = styled.TouchableOpacity`
+  border-radius: 5px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  height: 50px;
+  width: 170px;
 
   background-color: ${({ theme }) => theme.COLORS.speed_limit_background};
 
   elevation: 5;
-
-  padding: 15px;
 `;
 
-export const CommandLabel = styled.Text`
+export const CommandKeyDisplay = styled.Text`
   font-family: ${({ theme }) => theme.FONTS.numbers_600};
 
-  color: ${({ theme }) => theme.COLORS.text};
+  color: #070c19;
 
   font-size: 18px;
 `;
