@@ -59,7 +59,7 @@ export const CommandContainer = styled.View`
 
   align-items: center;
 
-  margin-top: 15px;
+  margin-top: 20px;
 `;
 
 export const CommandLabel = styled.Text`
@@ -94,4 +94,45 @@ export const CommandKeyDisplay = styled.Text`
   color: #070c19;
 
   font-size: 18px;
+`;
+
+export const CategoryTitle = styled.Text`
+  font-family: ${({ theme }) => theme.FONTS.numbers_500};
+  font-size: 22px;
+
+  margin-left: 15px;
+
+  color: #ff7900;
+
+  margin-top: 25px;
+  margin-bottom: 25px;
+`;
+
+export const InputContainer = styled.View`
+  width: 100%;
+  display: flex;
+
+  flex-direction: column;
+`;
+
+export const Input = styled.TextInput`
+  margin-top: 10px;
+  margin-bottom: 15px;
+
+  height: 50px;
+
+  border-radius: 5px;
+  border: 1px solid #201d33;
+
+  text-align: center;
+
+  font-family: ${({ theme }) => theme.FONTS.numbers_500};
+
+  font-size: 22px;
+
+  color: #070c19;
+
+  background-color: ${({ theme }) => theme.COLORS.speed_limit_background};
+
+  elevation: 5;
 `;

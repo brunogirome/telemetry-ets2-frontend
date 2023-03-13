@@ -7,6 +7,9 @@ import {
   CommandKeyDisplay,
   CommandContainer,
   CommandLabel,
+  CategoryTitle,
+  Input,
+  InputContainer,
 } from './stlyes';
 
 import Commands from '../../utils/default_settings';
@@ -25,6 +28,7 @@ export default function Settings() {
   return (
     <Container>
       <CommandsList>
+        <CategoryTitle>Hotkeys</CategoryTitle>
         {CommandList.map(command => (
           <CommandContainer key={command.key}>
             <CommandLabel>{command.name}</CommandLabel>
@@ -35,6 +39,11 @@ export default function Settings() {
             </CommandCard>
           </CommandContainer>
         ))}
+        <CategoryTitle>Server</CategoryTitle>
+        <InputContainer>
+          <CommandLabel>Server IP</CommandLabel>
+          <Input />
+        </InputContainer>
       </CommandsList>
       <SaveButton>
         <SaveButtonText>Salvar configurações</SaveButtonText>
