@@ -1,3 +1,5 @@
+import * as SplashScreen from 'expo-splash-screen';
+
 import { useFonts } from '@expo-google-fonts/rubik/useFonts';
 
 import {
@@ -12,11 +14,12 @@ import Dashboard from './src/screens/Dashboard';
 
 import Settings from './src/screens/Settings';
 
-import AppLoading from 'expo-app-loading';
-
 import { ThemeProvider } from 'styled-components';
 
 import THEME from './src/theme';
+import { useEffect } from 'react';
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -26,8 +29,18 @@ export default function App() {
     Inter_400Regular,
   });
 
+  useEffect(() => {
+    const setSplashScreen = async () => {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      }
+    };
+
+    setSplashScreen();
+  }, [fontsLoaded]);
+
   if (!fontsLoaded) {
-    return <AppLoading />;
+    return;
   }
 
   return (
