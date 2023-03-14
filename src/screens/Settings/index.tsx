@@ -1,10 +1,9 @@
 import {
-  CommandCard,
+  CommandInput,
   Container,
   SaveButton,
   SaveButtonText,
   CommandsList,
-  CommandKeyDisplay,
   CommandContainer,
   CommandLabel,
   CategoryTitle,
@@ -28,22 +27,20 @@ export default function Settings() {
   return (
     <Container>
       <CommandsList>
-        <CategoryTitle>Hotkeys</CategoryTitle>
-        {CommandList.map(command => (
-          <CommandContainer key={command.key}>
-            <CommandLabel>{command.name}</CommandLabel>
-            <CommandCard>
-              <CommandKeyDisplay>
-                {command.input_key == ' ' ? 'SPACE' : command.input_key}
-              </CommandKeyDisplay>
-            </CommandCard>
-          </CommandContainer>
-        ))}
         <CategoryTitle>Server</CategoryTitle>
         <InputContainer>
           <CommandLabel>Server IP</CommandLabel>
-          <Input />
+          <Input placeholder="Enter the server ip..." />
         </InputContainer>
+        <CategoryTitle>Hotkey</CategoryTitle>
+        {CommandList.map(command => (
+          <CommandContainer key={command.key}>
+            <CommandLabel>{command.name}</CommandLabel>
+            <CommandInput
+              value={command.input_key == ' ' ? 'SPACE' : command.input_key}
+            />
+          </CommandContainer>
+        ))}
       </CommandsList>
       <SaveButton>
         <SaveButtonText>Salvar configurações</SaveButtonText>

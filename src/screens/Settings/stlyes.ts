@@ -72,7 +72,7 @@ export const CommandLabel = styled.Text`
   font-size: 20px;
 `;
 
-export const CommandCard = styled.TouchableOpacity`
+export const CommandInput = styled.TextInput`
   border-radius: 5px;
 
   display: flex;
@@ -86,14 +86,14 @@ export const CommandCard = styled.TouchableOpacity`
   background-color: ${({ theme }) => theme.COLORS.speed_limit_background};
 
   elevation: 5;
-`;
 
-export const CommandKeyDisplay = styled.Text`
   font-family: ${({ theme }) => theme.FONTS.numbers_600};
 
   color: #070c19;
 
   font-size: 18px;
+
+  text-align: center;
 `;
 
 export const CategoryTitle = styled.Text`
@@ -128,7 +128,7 @@ export const Input = styled.TextInput`
 
   font-family: ${({ theme }) => theme.FONTS.numbers_500};
 
-  font-size: 22px;
+  font-size: 18px;
 
   color: #070c19;
 
