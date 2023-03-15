@@ -1,3 +1,5 @@
+import { NavigationProp, ParamListBase } from '@react-navigation/core';
+
 import {
   Container,
   CurrentSpeedText,
@@ -14,6 +16,7 @@ interface CurrentSpeedInterface {
   currentGasLiters: number;
   maxGasCapacity: number;
   isCruiseControlActive: boolean;
+  navigation: NavigationProp<ParamListBase>;
 }
 
 function CurrentSpeed({
@@ -21,6 +24,7 @@ function CurrentSpeed({
   maxGasCapacity,
   currentSpeed,
   isCruiseControlActive,
+  navigation,
 }: CurrentSpeedInterface) {
   return (
     <Container>
@@ -36,7 +40,7 @@ function CurrentSpeed({
           </GasText>
         </GasTextContainer>
       </NumberInfoContainer>
-      <HotKeyButton onPress={() => alert('Config')}>
+      <HotKeyButton onPress={() => navigation.navigate('Settings')}>
         <HotKeyButtonText>Configs.</HotKeyButtonText>
       </HotKeyButton>
     </Container>

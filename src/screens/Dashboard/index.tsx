@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { NavigationProp, ParamListBase } from '@react-navigation/core';
 
 import io from 'socket.io-client';
 
@@ -40,7 +41,11 @@ interface TelemetryInitialization {
   fuelCapacity: number;
 }
 
-export default function Dashboard() {
+interface DashboardProps {
+  navigation: NavigationProp<ParamListBase>;
+}
+
+export default function Dashboard({ navigation }: DashboardProps) {
   const [hazardStatus, setHazardStatus] = useState(false);
 
   const [cruiseControlStatus, setCruiseControlStatus] = useState(false);
@@ -176,6 +181,7 @@ export default function Dashboard() {
         currentGasLiters={currentGas}
         maxGasCapacity={fuelCapacity}
         isCruiseControlActive={cruiseControlStatus}
+        navigation={navigation}
       />
     </Container>
   );

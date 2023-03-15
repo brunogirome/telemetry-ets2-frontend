@@ -13,7 +13,7 @@ import {
 
 import Commands from '../../utils/default_settings';
 
-export default function Settings() {
+export default function Settings({ navigation }) {
   const CommandList: Array<typeof Commands.hazard> = [
     Commands.hazard,
     Commands.cruiseControl,
@@ -43,7 +43,9 @@ export default function Settings() {
         ))}
       </CommandsList>
       <SaveButton>
-        <SaveButtonText>Salvar configurações</SaveButtonText>
+        <SaveButtonText onPress={() => navigation.navigate('Dashboard')}>
+          Salvar configurações
+        </SaveButtonText>
       </SaveButton>
     </Container>
   );

@@ -10,6 +10,9 @@ import {
 
 import { Inter_400Regular } from '@expo-google-fonts/inter';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import Dashboard from './src/screens/Dashboard';
 
 import Settings from './src/screens/Settings';
@@ -20,6 +23,8 @@ import THEME from './src/theme';
 import { useEffect } from 'react';
 
 SplashScreen.preventAutoHideAsync();
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -45,7 +50,15 @@ export default function App() {
 
   return (
     <ThemeProvider theme={THEME}>
-      <Settings />
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Dashboard"
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Settings" component={Settings} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </ThemeProvider>
   );
 }
