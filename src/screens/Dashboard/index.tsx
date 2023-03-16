@@ -1,6 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
 import { NavigationProp, ParamListBase } from '@react-navigation/core';
 
+import * as ScreenOrientation from 'expo-screen-orientation';
+
+import { useIsFocused } from '@react-navigation/native';
+
 import io from 'socket.io-client';
 
 import HazardIcon from '../../assets/hazard.svg';
@@ -67,6 +71,22 @@ export default function Dashboard({ navigation }: DashboardProps) {
   const [currentGas, setCurrentGas] = useState(0);
 
   const [fuelCapacity, setFuelCapacity] = useState(0);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    const screenOrientation = async () => {
+      const orientation = await ScreenOrientation.getOrientationAsync();
+
+      if (orientation < 3) {
+        await ScreenOrientation.lockAsync(
+          ScreenOrientation.OrientationLock.LANDSCAPE,
+        );
+      }
+    };
+
+    screenOrientation();
+  }, [isFocused]);
 
   useEffect(() => {
     socket.on('hazard', status => setHazardStatus(status));
