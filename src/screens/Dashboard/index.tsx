@@ -137,10 +137,6 @@ export default function Dashboard({ navigation }: DashboardProps) {
 
   const pressButton = useCallback(
     (key: string) => {
-      alert('Previous state: ' + ip);
-
-      setIp('from dashboard');
-
       socket.emit('ingame_command', key);
     },
     [socket, ip, setIp],

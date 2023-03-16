@@ -69,16 +69,6 @@ export default function Settings({ navigation }) {
         ))}
       </CommandsList>
       <SaveButton>
-        <SaveButtonText
-          onPress={() => {
-            alert('Previous state: ' + ip);
-            setIp('from settings');
-          }}
-        >
-          Test Context
-        </SaveButtonText>
-      </SaveButton>
-      <SaveButton>
         <SaveButtonText onPress={() => navigation.navigate('Dashboard')}>
           Salvar configurações
         </SaveButtonText>
