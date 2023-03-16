@@ -4,6 +4,10 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { useIsFocused } from '@react-navigation/native';
 
+import { useIp } from '../../Hooks/ipContext';
+
+import Commands from '../../utils/default_settings';
+
 import {
   CommandInput,
   Container,
@@ -17,8 +21,6 @@ import {
   InputContainer,
 } from './stlyes';
 
-import Commands from '../../utils/default_settings';
-
 export default function Settings({ navigation }) {
   const CommandList: Array<typeof Commands.hazard> = [
     Commands.hazard,
@@ -31,6 +33,8 @@ export default function Settings({ navigation }) {
   ];
 
   const isFocused = useIsFocused();
+
+  const { ip, setIp } = useIp();
 
   useEffect(() => {
     const screenOrientation = async () => {
@@ -64,6 +68,16 @@ export default function Settings({ navigation }) {
           </CommandContainer>
         ))}
       </CommandsList>
+      <SaveButton>
+        <SaveButtonText
+          onPress={() => {
+            alert('Previous state: ' + ip);
+            setIp('from settings');
+          }}
+        >
+          Test Context
+        </SaveButtonText>
+      </SaveButton>
       <SaveButton>
         <SaveButtonText onPress={() => navigation.navigate('Dashboard')}>
           Salvar configurações

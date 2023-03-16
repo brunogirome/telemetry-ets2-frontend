@@ -25,6 +25,8 @@ import { Container, ButtonRow, ButtonRowContainer } from './styles';
 
 import defaultSettings from '../../utils/default_settings';
 
+import { useIp } from '../../Hooks/ipContext';
+
 const socket = io('http://192.168.0.22:3001');
 
 socket.connect();
@@ -73,6 +75,8 @@ export default function Dashboard({ navigation }: DashboardProps) {
   const [fuelCapacity, setFuelCapacity] = useState(0);
 
   const isFocused = useIsFocused();
+
+  const { ip, setIp } = useIp();
 
   useEffect(() => {
     const screenOrientation = async () => {
@@ -133,9 +137,13 @@ export default function Dashboard({ navigation }: DashboardProps) {
 
   const pressButton = useCallback(
     (key: string) => {
+      alert('Previous state: ' + ip);
+
+      setIp('from dashboard');
+
       socket.emit('ingame_command', key);
     },
-    [socket],
+    [socket, ip, setIp],
   );
 
   return (

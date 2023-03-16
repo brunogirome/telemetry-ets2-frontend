@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import * as SplashScreen from 'expo-splash-screen';
 
 import { useFonts } from '@expo-google-fonts/rubik/useFonts';
@@ -20,7 +22,8 @@ import Settings from './src/screens/Settings';
 import { ThemeProvider } from 'styled-components';
 
 import THEME from './src/theme';
-import { useEffect } from 'react';
+
+import { AppProvider } from './src/Hooks';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -49,16 +52,18 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={THEME}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Dashboard"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="Dashboard" component={Dashboard} />
-          <Stack.Screen name="Settings" component={Settings} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ThemeProvider>
+    <AppProvider>
+      <ThemeProvider theme={THEME}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Dashboard"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="Dashboard" component={Dashboard} />
+            <Stack.Screen name="Settings" component={Settings} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
+    </AppProvider>
   );
 }
