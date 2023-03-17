@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import * as ScreenOrientation from 'expo-screen-orientation';
 
@@ -6,7 +6,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 import { useIp } from '../../Hooks/ipContext';
 
-import Commands from '../../utils/default_settings';
+import { useCommands, CommandKey } from '../../Hooks/commanndsContext';
 
 import {
   CommandInput,
@@ -22,19 +22,78 @@ import {
 } from './stlyes';
 
 export default function Settings({ navigation }) {
-  const CommandList: Array<typeof Commands.hazard> = [
-    Commands.hazard,
-    Commands.cruiseControl,
-    Commands.highLight,
-    Commands.engineBreak,
-    Commands.differential,
-    Commands.light,
-    Commands.parking,
-  ];
-
   const isFocused = useIsFocused();
 
   const { ip, setIp } = useIp();
+
+  const { commands, changeInput } = useCommands();
+
+  const [hazardInputValue, setHazardInputValue] = useState(
+    commands[CommandKey.hazard].inputKey,
+  );
+
+  const [cruiseControlInputValue, setCruiseControlInputValue] = useState(
+    commands[CommandKey.cruiseControl].inputKey,
+  );
+
+  const [highLightInputValue, setHighLightInputValue] = useState(
+    commands[CommandKey.highLight].inputKey,
+  );
+
+  const [engineBreakInputValue, setEngineBreakInputValue] = useState(
+    commands[CommandKey.engineBreak].inputKey,
+  );
+
+  const [differentialInputValue, setDifferentialInputValue] = useState(
+    commands[CommandKey.differential].inputKey,
+  );
+
+  const [lightInputValue, setLightInputValue] = useState(
+    commands[CommandKey.light].inputKey,
+  );
+
+  const [parkingInputValue, setParkingInputValue] = useState(
+    commands[CommandKey.parking].inputKey,
+  );
+
+  const [ipInputValue, setIpInputValue] = useState(ip);
+
+  const saveSettings = useCallback(() => {
+    changeInput({ key: CommandKey.hazard, inputKey: hazardInputValue });
+    changeInput({
+      key: CommandKey.cruiseControl,
+      inputKey: cruiseControlInputValue,
+    });
+    changeInput({ key: CommandKey.highLight, inputKey: highLightInputValue });
+    changeInput({
+      key: CommandKey.engineBreak,
+      inputKey: engineBreakInputValue,
+    });
+    changeInput({
+      key: CommandKey.differential,
+      inputKey: differentialInputValue,
+    });
+    changeInput({ key: CommandKey.light, inputKey: lightInputValue });
+    changeInput({ key: CommandKey.parking, inputKey: parkingInputValue });
+    setIp(ipInputValue);
+  }, [
+    hazardInputValue,
+    setHazardInputValue,
+    cruiseControlInputValue,
+    setCruiseControlInputValue,
+    highLightInputValue,
+    setHighLightInputValue,
+    engineBreakInputValue,
+    setEngineBreakInputValue,
+    differentialInputValue,
+    setDifferentialInputValue,
+    lightInputValue,
+    setLightInputValue,
+    parkingInputValue,
+    setParkingInputValue,
+    ipInputValue,
+    setIpInputValue,
+  ]);
 
   useEffect(() => {
     const screenOrientation = async () => {
@@ -56,20 +115,40 @@ export default function Settings({ navigation }) {
         <CategoryTitle>Server</CategoryTitle>
         <InputContainer>
           <CommandLabel>Server IP</CommandLabel>
-          <Input placeholder="Enter the server ip..." />
+          <Input
+            placeholder="Enter the server ip..."
+            value={ipInputValue}
+            onChangeText={setIpInputValue}
+          />
         </InputContainer>
         <CategoryTitle>Hotkey</CategoryTitle>
-        {CommandList.map(command => (
+        {commands.map(command => (
           <CommandContainer key={command.key}>
             <CommandLabel>{command.name}</CommandLabel>
             <CommandInput
-              value={command.input_key == ' ' ? 'SPACE' : command.input_key}
+              value={
+                eval(`${command.varName}InputValue`) !== ' '
+                  ? eval(`${command.varName}InputValue`)
+                  : 'SPACE'
+              }
+              onChangeText={eval(
+                `set${
+                  command.varName.charAt(0).toUpperCase() +
+                  command.varName.slice(1)
+                }InputValue`,
+              )}
             />
           </CommandContainer>
         ))}
       </CommandsList>
       <SaveButton>
-        <SaveButtonText onPress={() => navigation.navigate('Dashboard')}>
+        <SaveButtonText
+          onPress={() => {
+            saveSettings();
+
+            navigation.navigate('Dashboard');
+          }}
+        >
           Salvar configurações
         </SaveButtonText>
       </SaveButton>

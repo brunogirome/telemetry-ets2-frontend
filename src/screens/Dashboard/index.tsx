@@ -23,7 +23,7 @@ import CurrentSpeed from '../../components/CurrentSpeed';
 
 import { Container, ButtonRow, ButtonRowContainer } from './styles';
 
-import defaultSettings from '../../utils/default_settings';
+import { useCommands, CommandKey } from '../../Hooks/commanndsContext';
 
 import { useIp } from '../../Hooks/ipContext';
 
@@ -76,7 +76,28 @@ export default function Dashboard({ navigation }: DashboardProps) {
 
   const isFocused = useIsFocused();
 
-  const { ip, setIp } = useIp();
+  const { commands } = useCommands();
+
+  const getSvg = (index: number) => {
+    switch (index) {
+      case 0:
+        return HazardIcon;
+      case 1:
+        return CruiseControlIcon;
+      case 2:
+        return HighLightIcon;
+      case 3:
+        return EngineBreakIcon;
+      case 4:
+        return DifferentialIcon;
+      case 5:
+        return LightIcon;
+      case 6:
+        return ParkingIcon;
+      default:
+        return null;
+    }
+  };
 
   useEffect(() => {
     const screenOrientation = async () => {
@@ -136,67 +157,44 @@ export default function Dashboard({ navigation }: DashboardProps) {
   }, [socket]);
 
   const pressButton = useCallback(
-    (key: string) => {
-      socket.emit('ingame_command', key);
+    (input: string) => {
+      socket.emit('ingame_command', input);
+
+      alert('Key pressed: ' + input);
     },
-    [socket, ip, setIp],
+    [socket],
   );
 
   return (
     <Container>
       <ButtonRowContainer>
         <ButtonRow>
-          <Button
-            key={defaultSettings.hazard.key}
-            buttonColor={defaultSettings.hazard.color}
-            Icon={HazardIcon}
-            active={hazardStatus}
-            onPress={() => pressButton(defaultSettings.hazard.input_key)}
-          />
-          <Button
-            key={defaultSettings.cruiseControl.key}
-            buttonColor={defaultSettings.cruiseControl.color}
-            Icon={CruiseControlIcon}
-            active={cruiseControlStatus}
-            onPress={() => pressButton(defaultSettings.cruiseControl.input_key)}
-          />
-          <Button
-            key={defaultSettings.highLight.key}
-            buttonColor={defaultSettings.highLight.color}
-            Icon={HighLightIcon}
-            active={highLightStatus}
-            onPress={() => pressButton(defaultSettings.highLight.input_key)}
-          />
-          <Button
-            key={defaultSettings.engineBreak.key}
-            buttonColor={defaultSettings.engineBreak.color}
-            Icon={EngineBreakIcon}
-            active={engineBreakStatus}
-            onPress={() => pressButton(defaultSettings.engineBreak.input_key)}
-          />
+          {commands.map(
+            command =>
+              command.key <= CommandKey.engineBreak && (
+                <Button
+                  key={command.key}
+                  buttonColor={command.color}
+                  Icon={getSvg(command.key)}
+                  active={eval(`${command.varName}Status`) as boolean}
+                  onPress={() => pressButton(command.inputKey)}
+                />
+              ),
+          )}
         </ButtonRow>
         <ButtonRow>
-          <Button
-            key={defaultSettings.differential.key}
-            buttonColor={defaultSettings.differential.color}
-            Icon={DifferentialIcon}
-            active={differentialStatus}
-            onPress={() => pressButton(defaultSettings.differential.input_key)}
-          />
-          <Button
-            key={defaultSettings.light.key}
-            buttonColor={defaultSettings.light.color}
-            Icon={LightIcon}
-            active={lightStatus}
-            onPress={() => pressButton(defaultSettings.light.input_key)}
-          />
-          <Button
-            key={defaultSettings.parking.key}
-            buttonColor={defaultSettings.parking.color}
-            Icon={ParkingIcon}
-            active={parkingStatus}
-            onPress={() => pressButton(defaultSettings.parking.input_key)}
-          />
+          {commands.map(
+            command =>
+              command.key >= CommandKey.differential && (
+                <Button
+                  key={command.key}
+                  buttonColor={command.color}
+                  Icon={getSvg(command.key)}
+                  active={eval(`${command.varName}Status`) as boolean}
+                  onPress={() => pressButton(command.inputKey)}
+                />
+              ),
+          )}
           <SpeedLimit speedLimit={speedLimit} />
         </ButtonRow>
       </ButtonRowContainer>
