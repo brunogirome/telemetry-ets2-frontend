@@ -4,9 +4,9 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { useIsFocused } from '@react-navigation/native';
 
-import { useIp } from '../../Hooks/ipContext';
+import { useSocket } from '../../Hooks/SocketContext';
 
-import { useCommands, CommandKey } from '../../Hooks/commanndsContext';
+import { useCommands, CommandKey } from '../../Hooks/CommanndsContext';
 
 import {
   CommandInput,
@@ -24,7 +24,7 @@ import {
 export default function Settings({ navigation }) {
   const isFocused = useIsFocused();
 
-  const { ip, setIp } = useIp();
+  const { ip, setIp } = useSocket();
 
   const { commands, changeInput } = useCommands();
 

@@ -23,9 +23,7 @@ import CurrentSpeed from '../../components/CurrentSpeed';
 
 import { Container, ButtonRow, ButtonRowContainer } from './styles';
 
-import { useCommands, CommandKey } from '../../Hooks/commanndsContext';
-
-import { useIp } from '../../Hooks/ipContext';
+import { useCommands, CommandKey } from '../../Hooks/CommanndsContext';
 
 const socket = io('http://192.168.0.22:3001');
 
