@@ -24,7 +24,7 @@ import {
 export default function Settings({ navigation }) {
   const isFocused = useIsFocused();
 
-  const { ip, setIp } = useSocket();
+  const { ip, changeIp } = useSocket();
 
   const { commands, changeInput } = useCommands();
 
@@ -60,22 +60,29 @@ export default function Settings({ navigation }) {
 
   const saveSettings = useCallback(() => {
     changeInput({ key: CommandKey.hazard, inputKey: hazardInputValue });
+
     changeInput({
       key: CommandKey.cruiseControl,
       inputKey: cruiseControlInputValue,
     });
+
     changeInput({ key: CommandKey.highLight, inputKey: highLightInputValue });
+
     changeInput({
       key: CommandKey.engineBreak,
       inputKey: engineBreakInputValue,
     });
+
     changeInput({
       key: CommandKey.differential,
       inputKey: differentialInputValue,
     });
+
     changeInput({ key: CommandKey.light, inputKey: lightInputValue });
+
     changeInput({ key: CommandKey.parking, inputKey: parkingInputValue });
-    setIp(ipInputValue);
+
+    changeIp({ socketIp: ipInputValue });
   }, [
     hazardInputValue,
     setHazardInputValue,

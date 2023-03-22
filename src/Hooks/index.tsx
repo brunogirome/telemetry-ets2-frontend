@@ -1,6 +1,6 @@
-import { IpProvider } from './ipContext';
+import { SocketProvider } from './SocketContext';
 
-import { CommandsProvider } from './commanndsContext';
+import { CommandsProvider } from './CommanndsContext';
 
 interface Props {
   children: React.ReactNode;
@@ -8,8 +8,8 @@ interface Props {
 
 export function AppProvider({ children }: Props) {
   return (
-    <IpProvider>
+    <SocketProvider>
       <CommandsProvider>{children}</CommandsProvider>
-    </IpProvider>
+    </SocketProvider>
   );
 }

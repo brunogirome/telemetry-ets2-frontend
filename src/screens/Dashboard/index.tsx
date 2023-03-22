@@ -5,8 +5,6 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { useIsFocused } from '@react-navigation/native';
 
-import io from 'socket.io-client';
-
 import HazardIcon from '../../assets/hazard.svg';
 import CruiseControlIcon from '../../assets/cruize_control.svg';
 import HighLightIcon from '../../assets/high_light.svg';
@@ -25,9 +23,7 @@ import { Container, ButtonRow, ButtonRowContainer } from './styles';
 
 import { useCommands, CommandKey } from '../../Hooks/CommanndsContext';
 
-const socket = io('http://192.168.0.22:3001');
-
-socket.connect();
+import { useSocket } from '../../Hooks/SocketContext';
 
 interface TelemetryInitialization {
   hazard: boolean;
@@ -75,6 +71,8 @@ export default function Dashboard({ navigation }: DashboardProps) {
   const isFocused = useIsFocused();
 
   const { commands } = useCommands();
+
+  const { socket } = useSocket();
 
   const getSvg = (index: number) => {
     switch (index) {
@@ -157,8 +155,6 @@ export default function Dashboard({ navigation }: DashboardProps) {
   const pressButton = useCallback(
     (input: string) => {
       socket.emit('ingame_command', input);
-
-      alert('Key pressed: ' + input);
     },
     [socket],
   );

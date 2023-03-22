@@ -1,25 +1,52 @@
-import React, { createContext, useState, useMemo, useContext } from 'react';
+import React, {
+  createContext,
+  useState,
+  useMemo,
+  useContext,
+  useCallback,
+} from 'react';
+
+import io, { Socket } from 'socket.io-client';
 
 interface Props {
   children: React.ReactNode;
 }
 
+interface changeIpProps {
+  socketIp: string;
+}
+
 interface SocketContextData {
   ip: string;
-  setIp(ip: string): void;
+  socket: Socket;
+  changeIp: ({ socketIp }: changeIpProps) => void;
 }
 
 const SokcketContext = createContext<SocketContextData>(
   {} as SocketContextData,
 );
 
-export function IpProvider({ children }: Props) {
+export function SocketProvider({ children }: Props) {
   const [ip, setIp] = useState('');
+
+  let socket = io(ip);
+
+  const changeIp = useCallback(
+    ({ socketIp }: changeIpProps) => {
+      setIp(socketIp);
+
+      socket = io(socketIp);
+
+      socket.connect();
+    },
+    [ip],
+  );
 
   const provider = useMemo<SocketContextData>(
     () => ({
       ip,
-      setIp,
+      changeIp,
+      socket,
     }),
     [ip],
   );
