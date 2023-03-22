@@ -4,9 +4,12 @@ import React, {
   useMemo,
   useContext,
   useCallback,
+  useEffect,
 } from 'react';
 
 import io, { Socket } from 'socket.io-client';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props {
   children: React.ReactNode;
@@ -32,7 +35,13 @@ export function SocketProvider({ children }: Props) {
   let socket = io(ip);
 
   const changeIp = useCallback(
-    ({ socketIp }: changeIpProps) => {
+    async ({ socketIp }: changeIpProps) => {
+      try {
+        await AsyncStorage.setItem('@ETD_socket_ip', socketIp);
+      } catch (e) {
+        alert(e);
+      }
+
       setIp(socketIp);
 
       socket = io(socketIp);
@@ -50,6 +59,22 @@ export function SocketProvider({ children }: Props) {
     }),
     [ip],
   );
+
+  useEffect(() => {
+    const getIp = async () => {
+      try {
+        const storageIp = await AsyncStorage.getItem('@ETD_socket_ip');
+
+        if (storageIp) {
+          setIp(storageIp);
+        }
+      } catch (e) {
+        alert(e);
+      }
+    };
+
+    getIp();
+  }, []);
 
   return (
     <SokcketContext.Provider value={provider}>
